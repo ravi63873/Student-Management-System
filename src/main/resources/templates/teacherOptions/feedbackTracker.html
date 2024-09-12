@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ACTS SMS</title>
+    <link rel="icon" th:href="@{/resources/book1.webp}" type="image/webp">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        body {
+            background-color: #f8f9fa;
+            flex: 1;
+        }
+        .container {
+            flex: 1;
+        }
+        .stars-outer {
+            display: inline-block;
+            position: relative;
+            font-size: 1.5rem; /* Adjust size as needed */
+            color: #ddd;
+        }
+        .stars-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            color: #f8ce0b;
+        }
+        .stars-outer::before {
+            content: "\f005 \f005 \f005 \f005 \f005";
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+        .stars-inner::before {
+            content: "\f005 \f005 \f005 \f005 \f005";
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+        .footer {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+        .table {
+            margin-top: 20px;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <nav th:replace="~{teacherDashboard :: teacher_navbar}"></nav>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Feedback Tracker</h2>
+
+        <!-- Average Rating -->
+        <div class="text-center mb-4">
+            <h3>Average Rating: 
+                <span class="stars-outer">
+                    <span class="stars-inner" th:style="'width:' + ${averageRating/5.0*100} + '%'"></span>
+                </span>
+                <span th:text="'(' + ${averageRating} + '/5)'"></span>
+            </h3>
+        </div>
+
+        <!-- Feedback Comments -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>SNo.</th>
+                        <th>Feedback</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="feedback, iterStat : ${feedbackList}">
+                        <td th:text="${iterStat.count}">1</td>
+                        <td>
+                            <blockquote class="blockquote">
+                                <p th:text="${feedback.comments}">Sample Feedback</p>
+                                <footer class="blockquote-footer">
+                                    <span th:text="'Rating: ' + ${feedback.rating}"></span>
+                                </footer>
+                            </blockquote>
+                        </td>
+                        <td>
+                            <div class="stars-outer">
+                                <div class="stars-inner" th:style="'width:' + ${feedback.rating/5.0*100} + '%'"></div>
+                            </div>
+                            <span th:text="'(' + ${feedback.rating} + '/5)'"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="footer" th:replace="~{teacherDashboard :: teacher_footer}">
+        &copy; 2024 ACTS TEACHER DASHBOARD
+    </footer>
+
+    <!-- Include FontAwesome for stars -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
